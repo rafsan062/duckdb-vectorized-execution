@@ -1,0 +1,247 @@
+(lldb) target create "build/debug/duckdb"
+Current executable set to '/Users/rafsan_temp/cpsc5300/duckdb/build/debug/duckdb' (arm64).
+(lldb) settings set -- target.run-args  "-no-agent" "-readonly" "/Users/rafsan_temp/cpsc5300/duckdb-research/dataset/cafe-10k.duckdb" "-c" "SELECT SUM(quantity * unit_price) AS revenue FROM cafe_sales WHERE quantity >= 2;"
+(lldb) command source -s 0 '/private/tmp/cpsc5300-cafe-lldb-commands.txt'
+Executing commands in '/private/tmp/cpsc5300-cafe-lldb-commands.txt'.
+(lldb) settings set target.disable-aslr false
+(lldb) breakpoint set --one-shot true --file src/execution/physical_operator.cpp --line 259
+Breakpoint 1: where = duckdb`duckdb::PhysicalOperator::BuildPipelines(duckdb::Pipeline&, duckdb::MetaPipeline&) + 1348 at physical_operator.cpp:259:6, address = 0x00000001101e0944
+(lldb) breakpoint command add -o 'frame variable this->type' -o 'continue' 1
+(lldb) breakpoint set --one-shot true --file src/parallel/pipeline_executor.cpp --line 415
+Breakpoint 2: where = duckdb`duckdb::PipelineExecutor::Execute(unsigned long long) + 5540 at pipeline_executor.cpp:415:33, address = 0x00000001111930f0
+(lldb) breakpoint command add -o 'frame variable source_chunk.count source_result.result' -o 'continue' 2
+(lldb) breakpoint set --one-shot true --file src/execution/operator/scan/physical_table_scan.cpp --line 186
+Breakpoint 3: where = duckdb`duckdb::PhysicalTableScan::GetDataInternal(duckdb::ExecutionContext&, duckdb::DataChunk&, duckdb::OperatorSourceInput&) const + 2492 at physical_table_scan.cpp:186:3, address = 0x000000010fbcc470
+(lldb) breakpoint command add -o 'frame variable function.name' -o 'continue' 3
+(lldb) breakpoint set --one-shot true --file src/storage/table/row_group.cpp --line 1051
+Breakpoint 4: where = duckdb`duckdb::RowGroup::ProcessPreparedScan(duckdb::ScanOptions, duckdb::CollectionScanState&, duckdb::DataChunk&) + 6528 at row_group.cpp:1051:5, address = 0x0000000111e1b878
+(lldb) breakpoint command add -o 'frame variable max_count count approved_tuple_count scan_idx' -o 'continue' 4
+(lldb) breakpoint set --one-shot true --file src/storage/table/column_segment.cpp --line 509
+Breakpoint 5: where = duckdb`duckdb::ColumnSegment::FilterSelection(duckdb::SelectionVector&, duckdb::Vector&, duckdb::TableFilterState&, unsigned long long, unsigned long long&) + 152 at column_segment.cpp:509:6, address = 0x0000000111d6d608
+(lldb) breakpoint command add -o 'frame variable scan_count approved_tuple_count state.fast_executor' -o 'continue' 5
+(lldb) breakpoint set --one-shot true --file src/execution/operator/projection/physical_projection.cpp --line 53
+Breakpoint 6: where = duckdb`duckdb::PhysicalProjection::Execute(duckdb::ExecutionContext&, duckdb::DataChunk&, duckdb::DataChunk&, duckdb::GlobalOperatorState&, duckdb::OperatorState&) const + 188 at physical_projection.cpp:53:2, address = 0x000000010fb9f9b4
+(lldb) breakpoint command add -o 'frame variable input.count' -o 'continue' 6
+(lldb) breakpoint set --one-shot true --file src/execution/operator/aggregate/physical_ungrouped_aggregate.cpp --line 387
+Breakpoint 7: where = duckdb`duckdb::PhysicalUngroupedAggregate::Sink(duckdb::ExecutionContext&, duckdb::DataChunk&, duckdb::OperatorSinkInput&) const + 636 at physical_ungrouped_aggregate.cpp:387:2, address = 0x000000010f051790
+(lldb) breakpoint command add -o 'frame variable chunk.count' -o 'continue' 7
+(lldb) breakpoint set --one-shot true --file src/execution/operator/aggregate/physical_ungrouped_aggregate.cpp --line 448
+Breakpoint 8: where = duckdb`duckdb::PhysicalUngroupedAggregate::Combine(duckdb::ExecutionContext&, duckdb::OperatorSinkCombineInput&) const + 1264 at physical_ungrouped_aggregate.cpp:448:2, address = 0x000000010f052984
+(lldb) breakpoint command add -o 'frame variable lstate.state.state.counts' -o 'continue' 8
+(lldb) breakpoint set --one-shot true --file src/execution/operator/aggregate/physical_ungrouped_aggregate.cpp --line 732
+Breakpoint 9: where = duckdb`duckdb::PhysicalUngroupedAggregate::GetDataInternal(duckdb::ExecutionContext&, duckdb::DataChunk&, duckdb::OperatorSourceInput&) const + 508 at physical_ungrouped_aggregate.cpp:732:2, address = 0x000000010f059264
+(lldb) breakpoint command add -o 'frame variable gstate.finished' -o 'continue' 9
+(lldb) breakpoint set --one-shot true --file src/storage/table/row_group.cpp --line 1053
+Breakpoint 10: 2 locations.
+(lldb) breakpoint command add -o 'frame variable max_count count approved_tuple_count' -o 'continue' 10
+(lldb) breakpoint set --one-shot true --file src/execution/operator/projection/physical_projection.cpp --line 54
+Breakpoint 11: where = duckdb`duckdb::PhysicalProjection::Execute(duckdb::ExecutionContext&, duckdb::DataChunk&, duckdb::DataChunk&, duckdb::GlobalOperatorState&, duckdb::OperatorState&) const + 376 at physical_projection.cpp:54:2, address = 0x000000010fb9fa70
+(lldb) breakpoint command add -o 'frame variable input.count chunk.count' -o 'continue' 11
+(lldb) breakpoint set --one-shot true --file src/execution/operator/aggregate/physical_ungrouped_aggregate.cpp --line 733
+Breakpoint 12: where = duckdb`duckdb::PhysicalUngroupedAggregate::GetDataInternal(duckdb::ExecutionContext&, duckdb::DataChunk&, duckdb::OperatorSourceInput&) const + 640 at physical_ungrouped_aggregate.cpp:733:21, address = 0x000000010f0592e8
+(lldb) breakpoint command add -o 'frame variable chunk.count' -o 'continue' 12
+(lldb) run
+(lldb)  continue
+Process 39110 resuming
+Command #1 'continue' continued the target.
+(lldb)  continue
+Process 39110 resuming
+Command #1 'continue' continued the target.
+(lldb)  continue
+Process 39110 resuming
+Command #1 'continue' continued the target.
+(lldb)  continue
+Process 39110 resuming
+Command #1 'continue' continued the target.
+(lldb)  continue
+Process 39110 resuming
+Command #1 'continue' continued the target.
+(lldb)  continue
+Process 39110 resuming
+Command #1 'continue' continued the target.
+(lldb)  continue
+Process 39110 resuming
+Command #1 'continue' continued the target.
+(lldb)  continue
+Process 39110 resuming
+Command #1 'continue' continued the target.
+(lldb)  continue
+Process 39110 resuming
+Command #1 'continue' continued the target.
+(lldb)  continue
+Process 39110 resuming
+Command #1 'continue' continued the target.
+(lldb)  continue
+Process 39110 resuming
+Command #1 'continue' continued the target.
+(lldb)  continue
+Process 39110 resuming
+Command #1 'continue' continued the target.
+┌───────────────┐
+│    revenue    │
+│ decimal(38,2) │
+├───────────────┤
+│     126989.25 │
+└───────────────┘
+Process 39110 launched: '/Users/rafsan_temp/cpsc5300/duckdb/build/debug/duckdb' (arm64)
+Process 39110 exited with status = 0 (0x00000000)
+(lldb) breakpoint list
+No breakpoints currently set.
+
+=== Reproduction of user-reported seven-breakpoint workflow ===
+(lldb) target create "build/debug/duckdb"
+Current executable set to '/Users/rafsan_temp/cpsc5300/duckdb/build/debug/duckdb' (arm64).
+(lldb) settings set -- target.run-args  "-no-agent" "-readonly" "/Users/rafsan_temp/cpsc5300/duckdb-research/dataset/cafe-10k.duckdb" "-c" "SELECT SUM(quantity * unit_price) AS revenue FROM cafe_sales WHERE quantity >= 2;"
+(lldb) command source -s 0 '/private/tmp/cpsc5300-cafe-lldb-manual.txt'
+Executing commands in '/private/tmp/cpsc5300-cafe-lldb-manual.txt'.
+(lldb) settings set target.disable-aslr false
+(lldb) breakpoint set --one-shot true --file src/execution/physical_operator.cpp --line 259
+Breakpoint 1: where = duckdb`duckdb::PhysicalOperator::BuildPipelines(duckdb::Pipeline&, duckdb::MetaPipeline&) + 1348 at physical_operator.cpp:259:6, address = 0x00000001101e0944
+(lldb) run
+Process 39170 launched: '/Users/rafsan_temp/cpsc5300/duckdb/build/debug/duckdb' (arm64)
+Process 39170 stopped
+* thread #1, queue = 'com.apple.main-thread', stop reason = one-shot breakpoint 1
+    frame #0: 0x0000000112e78944 duckdb`duckdb::PhysicalOperator::BuildPipelines(this=0x0000621000253568, current=0x000061500005f818, meta_pipeline=0x00006110002645d8) at physical_operator.cpp:259:6
+   256 			throw InternalException("Operator not supported in BuildPipelines");
+   257 		}
+   258 	
+-> 259 		if (IsSink()) {
+    		    ^
+   260 			// Operator is a sink.
+   261 			sink_state.reset();
+   262 	
+Target 0: (duckdb) stopped.
+(lldb) frame variable this->type
+(duckdb::PhysicalOperatorType) this->type = UNGROUPED_AGGREGATE
+(lldb) breakpoint set --one-shot true --file src/execution/physical_operator.cpp --line 273
+Breakpoint 2: where = duckdb`duckdb::PhysicalOperator::BuildPipelines(duckdb::Pipeline&, duckdb::MetaPipeline&) + 2196 at physical_operator.cpp:273:2, address = 0x0000000112e78c94
+(lldb) continue
+Process 39170 resuming
+Process 39170 stopped
+* thread #1, queue = 'com.apple.main-thread', stop reason = one-shot breakpoint 2
+    frame #0: 0x0000000112e78c94 duckdb`duckdb::PhysicalOperator::BuildPipelines(this=0x00006210002534a0, current=0x000061500005fa98, meta_pipeline=0x0000611000264718) at physical_operator.cpp:273:2
+   270 		}
+   271 	
+   272 		// Recurse into the child.
+-> 273 		state.AddPipelineOperator(current, *this);
+    		^
+   274 		children[0].get().BuildPipelines(current, meta_pipeline);
+   275 	}
+   276 	
+Target 0: (duckdb) stopped.
+(lldb) frame variable this->type
+(duckdb::PhysicalOperatorType) this->type = PROJECTION
+(lldb) breakpoint set --one-shot true --file src/execution/physical_operator.cpp --line 251
+Breakpoint 3: where = duckdb`duckdb::PhysicalOperator::BuildPipelines(duckdb::Pipeline&, duckdb::MetaPipeline&) + 788 at physical_operator.cpp:251:3, address = 0x0000000112e78714
+(lldb) continue
+Process 39170 resuming
+Process 39170 stopped
+* thread #1, queue = 'com.apple.main-thread', stop reason = one-shot breakpoint 3
+    frame #0: 0x0000000112e78714 duckdb`duckdb::PhysicalOperator::BuildPipelines(this=0x0000621000253100, current=0x000061500005fa98, meta_pipeline=0x0000611000264718) at physical_operator.cpp:251:3
+   248 		auto &state = meta_pipeline.GetState();
+   249 		if (!IsSink() && children.empty()) {
+   250 			// Operator is a source.
+-> 251 			state.SetPipelineSource(current, *this);
+    			^
+   252 			return;
+   253 		}
+   254 	
+Target 0: (duckdb) stopped.
+(lldb) frame variable this->type
+(duckdb::PhysicalOperatorType) this->type = TABLE_SCAN
+(lldb) breakpoint set --one-shot true --file src/execution/operator/scan/physical_table_scan.cpp --line 188
+Breakpoint 4: where = duckdb`duckdb::PhysicalTableScan::GetDataInternal(duckdb::ExecutionContext&, duckdb::DataChunk&, duckdb::OperatorSourceInput&) const + 2896 at physical_table_scan.cpp:188:3, address = 0x0000000112864604
+(lldb) continue
+Process 39170 resuming
+Process 39170 stopped
+* thread #2, stop reason = one-shot breakpoint 4
+    frame #0: 0x0000000112864604 duckdb`duckdb::PhysicalTableScan::GetDataInternal(this=0x0000621000253100, context=0x000061500008ff68, chunk=0x00006060000b6120, input=0x000000016d1ed050) const at physical_table_scan.cpp:188:3
+   185 			// Actually call the function
+   186 			function.function(context.client, data, chunk);
+   187 	
+-> 188 			const auto output_async_result = data.async_result.GetResultType();
+    			^
+   189 	
+   190 			// Compare and check whether state before and after function.function call is compatible, will throw in case of
+   191 			// inconsistencies
+Target 0: (duckdb) stopped.
+(lldb) expression -- chunk.size()
+(duckdb::idx_t) $0 = 1638
+(lldb) breakpoint set --one-shot true --file src/execution/operator/projection/physical_projection.cpp --line 53
+Breakpoint 5: where = duckdb`duckdb::PhysicalProjection::Execute(duckdb::ExecutionContext&, duckdb::DataChunk&, duckdb::DataChunk&, duckdb::GlobalOperatorState&, duckdb::OperatorState&) const + 188 at physical_projection.cpp:53:2, address = 0x00000001128379b4
+(lldb) continue
+Process 39170 resuming
+Process 39170 stopped
+* thread #2, stop reason = one-shot breakpoint 5
+    frame #0: 0x00000001128379b4 duckdb`duckdb::PhysicalProjection::Execute(this=0x00006210002534a0, context=0x000061500008ff68, input=0x00006060000b6120, chunk=0x000061500008fff8, gstate=0x000060200005c170, state_p=0x00006070001b4a20) const at physical_projection.cpp:53:2
+   50  	OperatorResultType PhysicalProjection::Execute(ExecutionContext &context, DataChunk &input, DataChunk &chunk,
+   51  	                                               GlobalOperatorState &gstate, OperatorState &state_p) const {
+   52  		auto &state = state_p.Cast<ProjectionState>();
+-> 53  		state.executor.Execute(input, chunk);
+    		^
+   54  		return OperatorResultType::NEED_MORE_INPUT;
+   55  	}
+   56  	
+Target 0: (duckdb) stopped.
+(lldb) expression -- input.size()
+(duckdb::idx_t) $1 = 1638
+(lldb) next
+[0K 20% ▕███████▌                              ▏(~17 seconds remaining)                     Read: 262.1 kB Memory: 573.4 kBProcess 39170 stopped
+* thread #2, stop reason = step over
+    frame #0: 0x0000000112837a70 duckdb`duckdb::PhysicalProjection::Execute(this=0x00006210002534a0, context=0x000061500008ff68, input=0x00006060000b6120, chunk=0x000061500008fff8, gstate=0x000060200005c170, state_p=0x00006070001b4a20) const at physical_projection.cpp:54:2
+   51  	                                               GlobalOperatorState &gstate, OperatorState &state_p) const {
+   52  		auto &state = state_p.Cast<ProjectionState>();
+   53  		state.executor.Execute(input, chunk);
+-> 54  		return OperatorResultType::NEED_MORE_INPUT;
+    		^
+   55  	}
+   56  	
+   57  	unique_ptr<OperatorState> PhysicalProjection::GetOperatorState(ExecutionContext &context) const {
+Target 0: (duckdb) stopped.
+(lldb) expression -- chunk.size()
+(duckdb::idx_t) $2 = 1638
+(lldb) breakpoint set --one-shot true --file src/execution/operator/aggregate/physical_ungrouped_aggregate.cpp --line 387
+Breakpoint 6: where = duckdb`duckdb::PhysicalUngroupedAggregate::Sink(duckdb::ExecutionContext&, duckdb::DataChunk&, duckdb::OperatorSinkInput&) const + 636 at physical_ungrouped_aggregate.cpp:387:2, address = 0x0000000111ce9790
+(lldb) continue
+Process 39170 resuming
+Process 39170 stopped
+* thread #2, stop reason = one-shot breakpoint 6
+    frame #0: 0x0000000111ce9790 duckdb`duckdb::PhysicalUngroupedAggregate::Sink(this=0x0000621000253568, context=0x000061500008ff68, chunk=0x000061500008fff8, input=0x000000016d1ed020) const at physical_ungrouped_aggregate.cpp:387:2
+   384 			SinkDistinct(context, chunk, input);
+   385 		}
+   386 	
+-> 387 		sink.execute_state.Sink(sink.state, chunk);
+    		^
+   388 		return SinkResultType::NEED_MORE_INPUT;
+   389 	}
+   390 	
+Target 0: (duckdb) stopped.
+(lldb) expression -- chunk.size()
+(duckdb::idx_t) $3 = 1638
+(lldb) breakpoint set --one-shot true --file src/execution/operator/aggregate/physical_ungrouped_aggregate.cpp --line 733
+Breakpoint 7: where = duckdb`duckdb::PhysicalUngroupedAggregate::GetDataInternal(duckdb::ExecutionContext&, duckdb::DataChunk&, duckdb::OperatorSourceInput&) const + 640 at physical_ungrouped_aggregate.cpp:733:21, address = 0x0000000111cf12e8
+(lldb) continue
+Process 39170 resuming
+Process 39170 stopped
+* thread #4, stop reason = one-shot breakpoint 7
+    frame #0: 0x0000000111cf12e8 duckdb`duckdb::PhysicalUngroupedAggregate::GetDataInternal(this=0x0000621000253568, context=0x00006150000618e8, chunk=0x0000615000061978, input=0x000000016d305050) const at physical_ungrouped_aggregate.cpp:733:21
+   730 	
+   731 		// initialize the result chunk with the aggregate values
+   732 		gstate.state.Finalize(chunk);
+-> 733 		VerifyNullHandling(chunk, gstate.state.state, aggregates);
+    		                   ^
+   734 		input.global_state.Cast<UngroupedAggregateGlobalSourceState>().finished = true;
+   735 	
+   736 		return SourceResultType::FINISHED;
+Target 0: (duckdb) stopped.
+(lldb) expression -- chunk.size()
+(duckdb::idx_t) $4 = 1
+(lldb) continue
+[0K 99% ▕█████████████████████████████████████▌▏(~12 seconds remaining)                     Read: 262.1 kB Memory: 557.0 kB[0K100% ▕██████████████████████████████████████▏(<1 second remaining)                       Read: 262.1 kB Memory: 786.4 kB[0K┌───────────────┐
+│    revenue    │
+│ decimal(38,2) │
+├───────────────┤
+│     126989.25 │
+└───────────────┘
+Process 39170 resuming
+Process 39170 exited with status = 0 (0x00000000)
