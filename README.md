@@ -2,6 +2,12 @@
 
 Research workspace for a CPSC 5300 project. The fictional Seattle University campus café dataset is synthetic; it does not represent real transactions.
 
+## Final white paper
+
+[DuckDB Vectorized Execution: Pipelines, CPU Instructions, and Performance](writeup/DuckDB_Vectorized_Execution_White_Paper.pdf) is the team's final research paper. It covers DuckDB's execution pipelines and DataChunk flow, LLDB observations, compiler vectorization and SIMD, and a benchmark comparison of vector-size and compiler settings. The paper also includes its references and AI orientation log.
+
+The café query, generator, pipeline investigation, and LLDB evidence are included here. The paper also refers to benchmark scripts and results under `benchmarks/`, but those artifacts are not currently in this repository; the paper's benchmark reproduction commands therefore cannot yet be run from this checkout alone.
+
 ## Setup
 
 DuckDB source is expected in `../duckdb`, with a debug build at `../duckdb/build/debug/duckdb`. The investigated commit is `87d96b7773a10356b11cc15c352125acdc58a9ce`. For a new source checkout, run the following from this research repository (do not overwrite an existing `../duckdb`):
@@ -54,7 +60,7 @@ The `~` row counts in the plan are estimates. The dataset uses regular determini
 - `dataset/`: shared synthetic data and SQL.
 - `pipeline/`: Rizvan's pipeline and LLDB investigation.
 - `pipeline/evidence/`: debugger transcripts supporting the investigation.
-- `simd/`: Kevin's SIMD and assembly investigation.
-- `benchmarks/`: Jeffrey's benchmark experiments.
-- `writeup/`: research paper.
-- `presentation/`: slides and demonstration.
+- `simd/`: reserved for Kevin's SIMD and assembly investigation.
+- `benchmarks/`: reserved for Jeffrey's benchmark experiments; scripts and results are not currently included.
+- `writeup/`: final white paper and Rizvan's pipeline draft.
+- `presentation/`: reserved for slides and demonstration.
