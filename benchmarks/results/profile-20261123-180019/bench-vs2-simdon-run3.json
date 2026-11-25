@@ -1,0 +1,155 @@
+{
+    "io": {
+        "total_bytes_read": 0,
+        "total_bytes_written": 0,
+        "total_read_operations": 0,
+        "total_read_time": 0.0,
+        "total_write_operations": 0,
+        "total_write_time": 0.0
+    },
+    "operator": [
+        {
+            "extra_info": {},
+            "intermediate_rows": 0,
+            "intermediate_size_bytes": 0,
+            "name": "RESULT_COLLECTOR",
+            "timing": 0.000036708,
+            "type": "RESULT_COLLECTOR",
+            "children": [
+                {
+                    "extra_info": {
+                        "Aggregates": "sum_no_overflow(#0)",
+                        "Estimated Cardinality": "1"
+                    },
+                    "intermediate_rows": 1,
+                    "intermediate_size_bytes": 16,
+                    "name": "UNGROUPED_AGGREGATE",
+                    "timing": 0.24934224702159694,
+                    "type": "UNGROUPED_AGGREGATE",
+                    "children": [
+                        {
+                            "extra_info": {
+                                "Projections": "(CAST(quantity AS DECIMAL(18,0)) * CAST(unit_price AS DECIMAL(18,2)))",
+                                "Estimated Cardinality": "8000000"
+                            },
+                            "intermediate_rows": 8000000,
+                            "intermediate_size_bytes": 64000000,
+                            "name": "PROJECTION",
+                            "timing": 1.153280037000465,
+                            "type": "PROJECTION",
+                            "children": [
+                                {
+                                    "extra_info": {
+                                        "Table": "\"cafe-10000000\".main.cafe_sales",
+                                        "Type": "Sequential Scan",
+                                        "Projections": [
+                                            "quantity",
+                                            "unit_price"
+                                        ],
+                                        "Filters": "(quantity >= 2)",
+                                        "Estimated Cardinality": "8000000"
+                                    },
+                                    "intermediate_rows": 8000000,
+                                    "intermediate_size_bytes": 64000000,
+                                    "name": "SEQ_SCAN",
+                                    "row_groups_scanned": 82,
+                                    "rows_scanned": 10000000,
+                                    "timing": 1.5083603090351543,
+                                    "total_row_groups_to_scan": 82,
+                                    "type": "TABLE_SCAN"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "optimizer": {
+        "aggregate_function_rewriter": 0.000015166,
+        "aggregate_reuse": 0.000002417,
+        "build_side_probe_side": 0.000002,
+        "case_to_filter_aggregate": 0.000002292,
+        "column_lifetime": 0.000004208,
+        "common_aggregate": 0.000001417,
+        "common_subexpressions": 0.000005875,
+        "common_subplan": 0.000024,
+        "cte_filter_pusher": 0.000002167,
+        "cte_inlining": 0.000001458,
+        "deliminator": 7.91e-7,
+        "disjunctive_join_rewriter": 0.0000035,
+        "duplicate_eliminated_domain": 0.00000775,
+        "duplicate_groups": 0.000002542,
+        "empty_result_pullup": 0.00000175,
+        "expression_rewriter": 0.000128417,
+        "filter_pullup": 0.000002875,
+        "filter_pushdown": 0.000042291,
+        "grouping_sets": 2.92e-7,
+        "in_clause": 0.000001375,
+        "join_elimination": 0.000004333,
+        "join_filter_pushdown": 0.000002125,
+        "join_order": 0.000176041,
+        "join_to_semi_join": 0.000021542,
+        "late_materialization": 0.000002667,
+        "limit_pushdown": 8.75e-7,
+        "mark_join_simplifier": 0.000001834,
+        "outer_join_simplification": 0.000002458,
+        "partial_aggregate_pushdown": 0.00000325,
+        "partitioned_execution": 0.000001208,
+        "projection_placement": 0.000006208,
+        "projection_pullup": 0.000003125,
+        "redundant_distinct": 0.00000125,
+        "redundant_order": 8.33e-7,
+        "redundant_order_keys": 8.75e-7,
+        "regex_range": 0.000001041,
+        "reorder_filter": 2.5e-7,
+        "row_group_pruner": 1.25e-7,
+        "row_number_rewriter": 0.000001166,
+        "sampling_pushdown": 0.000001125,
+        "scalar_aggregate_merge": 8.75e-7,
+        "scalar_fn_pushdown": 6.67e-7,
+        "self_join_aggregate": 0.00000375,
+        "set_operation_aggregate": 8.75e-7,
+        "statistics_propagation": 0.00005325,
+        "top_n": 0.000001291,
+        "top_n_window_elimination": 0.000002334,
+        "total_time": 0.000652208,
+        "type_pushdown": 0.000001083,
+        "unnest_rewriter": 0.000003875,
+        "unused_columns": 0.000026042,
+        "window_fusion": 0.0000085,
+        "window_join_pushdown": 0.00000225,
+        "window_self_join": 9.17e-7
+    },
+    "parser": {
+        "total_time": 0.000099875
+    },
+    "physical_planner": {
+        "column_binding": 0.00000225,
+        "create_plan": 0.000029958,
+        "resolve_types": 8.3e-8,
+        "total_time": 0.000036458
+    },
+    "planner": {
+        "binding_time": 0.000311292,
+        "total_time": 0.000341541
+    },
+    "query": {
+        "cpu_time": 2.911019301057216,
+        "sql": "SELECT SUM(quantity * unit_price) AS revenue FROM cafe_sales WHERE quantity >= 2;",
+        "total_intermediate_rows": 16000001,
+        "total_intermediate_size_bytes": 128000016,
+        "total_row_groups_scanned": 82,
+        "total_row_groups_to_scan": 82,
+        "total_rows_scanned": 10000000,
+        "total_time": 3.62245425
+    },
+    "system": {
+        "blocked_thread_time": 0.0,
+        "peak_buffer_memory": 22020096,
+        "peak_streaming_buffer_size": 0,
+        "peak_temp_dir_size": 0,
+        "total_bytes_spilled": 0,
+        "total_memory_allocated": 0
+    }
+}

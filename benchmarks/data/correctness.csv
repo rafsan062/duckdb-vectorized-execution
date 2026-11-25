@@ -1,0 +1,9 @@
+build,database,row_count,revenue
+bench-vs2-simdoff,vs2/cafe-10k.duckdb,10000,126989.25
+bench-vs2-simdoff,vs2/cafe-10000000.duckdb,10000000,126999999.75
+bench-vs2-simdon,vs2/cafe-10k.duckdb,10000,126989.25
+bench-vs2-simdon,vs2/cafe-10000000.duckdb,10000000,126999999.75
+bench-vs2048-simdoff,vs2048/cafe-10k.duckdb,10000,126989.25
+bench-vs2048-simdoff,vs2048/cafe-10000000.duckdb,10000000,126999999.75
+bench-vs2048-simdon,vs2048/cafe-10k.duckdb,10000,126989.25
+bench-vs2048-simdon,vs2048/cafe-10000000.duckdb,10000000,126999999.75

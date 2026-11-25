@@ -1,0 +1,155 @@
+{
+    "io": {
+        "total_bytes_read": 0,
+        "total_bytes_written": 0,
+        "total_read_operations": 0,
+        "total_read_time": 0.0,
+        "total_write_operations": 0,
+        "total_write_time": 0.0
+    },
+    "operator": [
+        {
+            "extra_info": {},
+            "intermediate_rows": 0,
+            "intermediate_size_bytes": 0,
+            "name": "RESULT_COLLECTOR",
+            "timing": 0.000006333,
+            "type": "RESULT_COLLECTOR",
+            "children": [
+                {
+                    "extra_info": {
+                        "Aggregates": "sum_no_overflow(#0)",
+                        "Estimated Cardinality": "1"
+                    },
+                    "intermediate_rows": 1,
+                    "intermediate_size_bytes": 16,
+                    "name": "UNGROUPED_AGGREGATE",
+                    "timing": 0.000854522000000034,
+                    "type": "UNGROUPED_AGGREGATE",
+                    "children": [
+                        {
+                            "extra_info": {
+                                "Projections": "(CAST(quantity AS DECIMAL(18,0)) * CAST(unit_price AS DECIMAL(18,2)))",
+                                "Estimated Cardinality": "8000000"
+                            },
+                            "intermediate_rows": 8000000,
+                            "intermediate_size_bytes": 64000000,
+                            "name": "PROJECTION",
+                            "timing": 0.03332322199999916,
+                            "type": "PROJECTION",
+                            "children": [
+                                {
+                                    "extra_info": {
+                                        "Table": "\"cafe-10000000\".main.cafe_sales",
+                                        "Type": "Sequential Scan",
+                                        "Projections": [
+                                            "quantity",
+                                            "unit_price"
+                                        ],
+                                        "Filters": "(quantity >= 2)",
+                                        "Estimated Cardinality": "8000000"
+                                    },
+                                    "intermediate_rows": 8000000,
+                                    "intermediate_size_bytes": 64000000,
+                                    "name": "SEQ_SCAN",
+                                    "row_groups_scanned": 82,
+                                    "rows_scanned": 10000000,
+                                    "timing": 0.014529672999999821,
+                                    "total_row_groups_to_scan": 82,
+                                    "type": "TABLE_SCAN"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "optimizer": {
+        "aggregate_function_rewriter": 0.000006916,
+        "aggregate_reuse": 8.33e-7,
+        "build_side_probe_side": 7.08e-7,
+        "case_to_filter_aggregate": 7.5e-7,
+        "column_lifetime": 0.0000025,
+        "common_aggregate": 5.84e-7,
+        "common_subexpressions": 0.000002542,
+        "common_subplan": 0.00001075,
+        "cte_filter_pusher": 7.91e-7,
+        "cte_inlining": 3.75e-7,
+        "deliminator": 3.33e-7,
+        "disjunctive_join_rewriter": 0.000001583,
+        "duplicate_eliminated_domain": 0.0000035,
+        "duplicate_groups": 0.000001541,
+        "empty_result_pullup": 2.09e-7,
+        "expression_rewriter": 0.00006075,
+        "filter_pullup": 5.83e-7,
+        "filter_pushdown": 0.0000155,
+        "grouping_sets": 2.92e-7,
+        "in_clause": 4.17e-7,
+        "join_elimination": 0.000002042,
+        "join_filter_pushdown": 4.58e-7,
+        "join_order": 0.000063291,
+        "join_to_semi_join": 0.000008417,
+        "late_materialization": 7.5e-7,
+        "limit_pushdown": 3.33e-7,
+        "mark_join_simplifier": 4.59e-7,
+        "outer_join_simplification": 0.000001542,
+        "partial_aggregate_pushdown": 0.000001125,
+        "partitioned_execution": 4.16e-7,
+        "projection_placement": 0.00000225,
+        "projection_pullup": 0.000001167,
+        "redundant_distinct": 2.91e-7,
+        "redundant_order": 2.92e-7,
+        "redundant_order_keys": 2.5e-7,
+        "regex_range": 3.33e-7,
+        "reorder_filter": 2.08e-7,
+        "row_group_pruner": 2.08e-7,
+        "row_number_rewriter": 4.17e-7,
+        "sampling_pushdown": 2.5e-7,
+        "scalar_aggregate_merge": 4.58e-7,
+        "scalar_fn_pushdown": 2.5e-7,
+        "self_join_aggregate": 0.000001083,
+        "set_operation_aggregate": 2.92e-7,
+        "statistics_propagation": 0.000024,
+        "top_n": 4.17e-7,
+        "top_n_window_elimination": 7.5e-7,
+        "total_time": 0.000282,
+        "type_pushdown": 3.75e-7,
+        "unnest_rewriter": 9.17e-7,
+        "unused_columns": 0.000008834,
+        "window_fusion": 0.000001959,
+        "window_join_pushdown": 4.16e-7,
+        "window_self_join": 4.17e-7
+    },
+    "parser": {
+        "total_time": 0.000043333
+    },
+    "physical_planner": {
+        "column_binding": 0.00000125,
+        "create_plan": 0.000009125,
+        "resolve_types": 8.4e-8,
+        "total_time": 0.000014167
+    },
+    "planner": {
+        "binding_time": 0.000109208,
+        "total_time": 0.000125209
+    },
+    "query": {
+        "cpu_time": 0.048713749999999015,
+        "sql": "SELECT SUM(quantity * unit_price) AS revenue FROM cafe_sales WHERE quantity >= 2;",
+        "total_intermediate_rows": 16000001,
+        "total_intermediate_size_bytes": 128000016,
+        "total_row_groups_scanned": 82,
+        "total_row_groups_to_scan": 82,
+        "total_rows_scanned": 10000000,
+        "total_time": 0.05185875
+    },
+    "system": {
+        "blocked_thread_time": 0.0,
+        "peak_buffer_memory": 22052864,
+        "peak_streaming_buffer_size": 0,
+        "peak_temp_dir_size": 0,
+        "total_bytes_spilled": 0,
+        "total_memory_allocated": 0
+    }
+}
